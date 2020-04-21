@@ -15,7 +15,6 @@ jobs:
         uses: actions/checkout@master
 
       - name: Build solution and generate NuGet package
-        working-directory: ./csharp
         run: dotnet publish -c Release -o out  
 
       - name: Install NuGet client
