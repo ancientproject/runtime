@@ -10,7 +10,7 @@
     <PackageProjectUrl>https://github.com/ancientproject/runtime</PackageProjectUrl>
     <RepositoryUrl>https://github.com/ancientproject/runtime</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageIconUrl>https://raw.githubusercontent.com/0xF6/ancient_cpu/master/Rune/resource/icon.png</PackageIconUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/ancientproject/cli/master/resource/icon.png</PackageIconUrl>
     <Copyright>(C) 2020 Yuuki Wesp</Copyright>
   </PropertyGroup>
   <PropertyGroup Condition="$(Configuration) == 'Debug'">
