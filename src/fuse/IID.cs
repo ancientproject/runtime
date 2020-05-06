@@ -1,9 +1,11 @@
 ﻿namespace ancient.runtime
 {
+    using System;
+
     public enum IID : short
     {
         [OpCode(0x00)] nop,
-        [OpCode(0x0A)] warm,
+        [Obsolete][OpCode(0x0A)] warm,
         [OpCode(0x0D)] halt,
 
         [OpCode(0x01)] ldi,
@@ -17,9 +19,12 @@
 
         [OpCode(0x03)] swap,
 
-        [OpCode(0x08)] ref_t , [OpCode(0x08)] jump_t, 
-        [OpCode(0x08)] jump_e, [OpCode(0x08)] jump_g,
-        [OpCode(0x08)] jump_u, [OpCode(0x08)] jump_y,
+        [OpCode(0x08)] ref_t ,
+        [Obsolete] [OpCode(0x08)] jump_t,
+        [Obsolete] [OpCode(0x08)] jump_e,
+        [Obsolete] [OpCode(0x08)] jump_g,
+        [Obsolete] [OpCode(0x08)] jump_u,
+        [Obsolete] [OpCode(0x08)] jump_y,
         [OpCode(0x09)] jump_p,
 
 
@@ -43,19 +48,33 @@
         [OpCode(0xB2)] dec,
         [OpCode(0xB3)] dup,
         [OpCode(0xB4)] ckft,
-        [OpCode(0xB5)] ixor,
-        [OpCode(0xB6)] ior,
-        [OpCode(0xB7)] neg,
+        
+        [OpCode(0xB5)] inv,
 
         [OpCode(0xC1)] brk_s,
         [OpCode(0xC1)] brk_n,
         [OpCode(0xC1)] brk_a,
 
+        [OpCode(0xC2)] dif_t, // if true  then skip N instructions
+        [OpCode(0xC3)] dif_f, // if false then skip N instructions
+
         //[OpCode(0xA4)] inv,
         //[OpCode(0xA5)] sig, 
         //[OpCode(0xA6)] ret,
 
-        
+
+        // classic equal operation
+        // .ceq &(0x0) &(0x1)            - [0x0] == [0x1] and push result onto stack
+        // .ceq &(0x2) <| &(0x0) &(0x1)  - [0x0] == [0x1] and push result into [0x2]
+        // .ceq                          - fetch two values from stack and compare that and push result onto stack
+        // .ceq &(0x0)                   - fetch two values from stack and compare that and set result into [0x0]
+        [OpCode(0xC5)] ceq, // N == C -> result
+        [OpCode(0xC5)] neq, // N != C -> result
+        [OpCode(0xC5)] xor, // N ^ C -> result
+        [OpCode(0xC5)] or,  // N | C -> result
+        [OpCode(0xC5)] and, // N & C -> result
+
+
 
         // 1x, abs, acos, atan, acosh, atanh, asin, asinh, cbrt, cell, cos, cosh, flr, exp, log, log10, tan, tanh, trc, bitd, biti
         // 2x, atan2, min, max
