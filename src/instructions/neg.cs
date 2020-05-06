@@ -2,11 +2,11 @@
 {
     using emit.@unsafe;
 
-    public class neg : Instruction
+    public class inv : Instruction
     {
         private readonly byte _cell1;
 
-        public neg(byte cell) : base(IID.neg) => _cell1 = cell;
+        public inv(byte cell) : base(IID.inv) => _cell1 = cell;
 
         #region Overrides of Instruction
 
