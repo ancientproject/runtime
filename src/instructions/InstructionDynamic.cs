@@ -3,6 +3,7 @@
     using System.Linq;
     using emit.@unsafe;
     using exceptions;
+    using JetBrains.Annotations;
 
     public abstract class InstructionDynamic : InstructionWithArgs
     {
@@ -15,11 +16,11 @@
             All = 0x3,
         }
 
-        protected InstructionDynamic(IID opCode, byte? resultCell, params byte[] arguments)
+        protected InstructionDynamic(IID opCode, byte? resultCell, params byte?[] arguments)
             : base(opCode)
         {
             c1 = resultCell;
-            args = arguments;
+            args = arguments.Where(x => x.HasValue).Select(x => x.Value).ToArray();
             if (arguments.Length > 2)
                 throw new TooManyArgumentsException();
         }
