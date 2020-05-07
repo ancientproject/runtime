@@ -2,7 +2,7 @@
 {
     public class sqrt : InstructionDynamic
     {
-        public sqrt(byte? resultCell, byte cell1) 
+        public sqrt(byte? resultCell, byte? cell1) 
             : base(IID.sqrt, resultCell, cell1) { }
     }
 }

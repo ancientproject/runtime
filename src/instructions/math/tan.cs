@@ -2,7 +2,7 @@
 {
     public class tan : InstructionDynamic
     {
-        public tan(byte? resultCell, byte cell1)
+        public tan(byte? resultCell, byte? cell1)
             : base(IID.tan, resultCell, cell1) { }
     }
 }
