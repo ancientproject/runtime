@@ -4,9 +4,9 @@
 
     public abstract class AdvancedInstruction : Instruction
     {
-        private byte? c1 { get; }
-        private byte? c2 { get; }
-        private byte? c3 { get; }
+        internal byte? c1 { get; }
+        internal byte? c2 { get; }
+        internal byte? c3 { get; }
 
         protected AdvancedInstruction(IID opCode, byte? resultCell, byte? cell1, byte? cell2) 
             : base(opCode)
