@@ -2,7 +2,7 @@
 {
     public class trc : InstructionDynamic
     {
-        public trc(byte? resultCell, byte? cell1)
+        public trc(byte? resultCell, byte cell1)
             : base(IID.trc, resultCell, cell1) { }
     }
 }

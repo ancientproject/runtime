@@ -2,7 +2,7 @@
 {
     public class cbrt : InstructionDynamic
     {
-        public cbrt(byte? resultCell, byte? cell1)
+        public cbrt(byte? resultCell, byte cell1)
             : base(IID.cbrt, resultCell, cell1) { }
     }
 }

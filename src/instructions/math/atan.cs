@@ -2,7 +2,7 @@
 {
     public class atan : InstructionDynamic
     {
-        public atan(byte? resultCell, byte? cell1)
+        public atan(byte? resultCell, byte cell1)
             : base(IID.atan, resultCell, cell1) { }
     }
 }
