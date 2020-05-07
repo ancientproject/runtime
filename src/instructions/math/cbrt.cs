@@ -1,8 +1,8 @@
 ﻿namespace ancient.runtime
 {
-    public class cbrt : AdvancedInstruction
+    public class cbrt : InstructionDynamic
     {
-        public cbrt(byte? resultCell, byte? cell1, byte? cell2)
-            : base(IID.cbrt, resultCell, cell1, cell2) { }
+        public cbrt(byte? resultCell, byte? cell1)
+            : base(IID.cbrt, resultCell, cell1) { }
     }
 }

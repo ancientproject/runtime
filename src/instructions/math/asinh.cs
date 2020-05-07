@@ -1,8 +1,8 @@
 ﻿namespace ancient.runtime
 {
-    public class asinh : AdvancedInstruction
+    public class asinh : InstructionDynamic
     {
-        public asinh(byte? resultCell, byte? cell1, byte? cell2)
-            : base(IID.acosh, resultCell, cell1, cell2) { }
+        public asinh(byte? resultCell, byte? cell1)
+            : base(IID.asinh, resultCell, cell1) { }
     }
 }

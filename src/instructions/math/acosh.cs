@@ -1,8 +1,8 @@
 ﻿namespace ancient.runtime
 {
-    public class acosh : AdvancedInstruction
+    public class acosh : InstructionDynamic
     {
-        public acosh(byte? resultCell, byte? cell1, byte? cell2)
-            : base(IID.acosh, resultCell, cell1, cell2) { }
+        public acosh(byte? resultCell, byte? cell1)
+            : base(IID.acosh, resultCell, cell1) { }
     }
 }

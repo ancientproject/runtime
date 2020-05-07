@@ -1,8 +1,8 @@
 ﻿namespace ancient.runtime
 {
-    public class trc : AdvancedInstruction
+    public class trc : InstructionDynamic
     {
-        public trc(byte? resultCell, byte? cell1, byte? cell2)
-            : base(IID.trc, resultCell, cell1, cell2) { }
+        public trc(byte? resultCell, byte? cell1)
+            : base(IID.trc, resultCell, cell1) { }
     }
 }

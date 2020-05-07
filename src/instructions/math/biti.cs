@@ -1,8 +1,8 @@
 ﻿namespace ancient.runtime
 {
-    public class biti : AdvancedInstruction
+    public class biti : InstructionDynamic
     {
-        public biti(byte? resultCell, byte? cell1, byte? cell2)
-            : base(IID.biti, resultCell, cell1, cell2) { }
+        public biti(byte? resultCell, byte? cell1)
+            : base(IID.biti, resultCell, cell1) { }
     }
 }
