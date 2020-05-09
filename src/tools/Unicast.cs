@@ -26,8 +26,10 @@
 
         public static implicit operator Func<TIn, int, TOutF>(Unicast<TOutF, TIn> u) => (q,i) => u & q;
         public static implicit operator Func<TOutF, int, TIn>(Unicast<TOutF, TIn> u) => (q,i) => u | q;
-
-
+        public static implicit operator Func<TIn, ushort, TOutF>(Unicast<TOutF, TIn> u) => (q, i) => u & q;
+        public static implicit operator Func<TOutF, ushort, TIn>(Unicast<TOutF, TIn> u) => (q, i) => u | q;
+        public static implicit operator Func<TIn, uint, TOutF>(Unicast<TOutF, TIn> u) => (q, i) => u & q;
+        public static implicit operator Func<TOutF, uint, TIn>(Unicast<TOutF, TIn> u) => (q, i) => u | q;
         public Func<TOutF, TIn> auto => this;
 
         //
