@@ -3,6 +3,7 @@
 namespace ancient.runtime
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
 
@@ -92,6 +93,7 @@ namespace ancient.runtime
 
             foreach (var @class in classes)
             {
+                var name = @class.Name;
                 static object @default(ParameterInfo t) => t.ParameterType.IsValueType ?
                     Activator.CreateInstance(t.ParameterType) :
                     null;
@@ -104,16 +106,34 @@ namespace ancient.runtime
                         return Activator.CreateInstance(t, args, null) as T;
                     return default;
                 }
+                static object[] PrepareArgs(object[] args, ParameterInfo[] target) 
+                    => target.Select((v, i) => (args.Length > i ? args[i] : null) ?? @default(v)).ToArray();
 
+                static Instruction ConstructUnsafeObject(Type @class) 
+                    => Activate<Instruction>(@class, @class.GetConstructors().First().GetParameters().Select(@default).ToArray());
+
+                if(ConstructUnsafeObject(@class).ID != id)
+                    continue;
+                var ctors = @class.GetConstructors();
+                if (!ctors.Any())
+                    throw new Exception($"[{id}] Nearby type '{@class.FullName}' is not valid constructors.");
+                var ctor = ctors.First();
+                
+                var classConstructorParams = ctor.GetParameters();
                 if (!args.Any())
-                    args = @class.GetConstructors().First().GetParameters().Select(@default).ToArray();
-                var inst = Activate<Instruction>(@class, args);
-                if (inst is { } block && block.ID == id)
-                    return inst;
+                    args = classConstructorParams.Select(@default).ToArray();
+                if (!(ctor.Invoke(PrepareArgs(args, classConstructorParams)) is Instruction inst))
+                    throw new InvalidOperationException($"Failed invoke constructor for [{id}:{@class.Name}].");
+                return inst;
             }
             throw new InvalidOperationException($"Not found class for '{id}' operation.");
         }
 
+        public static int GetArgumentCountBy(IID id)
+            => Summon(id).GetType().GetConstructors().First().GetParameters().Length;
+
         #endregion serviced
+
+
     }
 }
