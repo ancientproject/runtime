@@ -13,12 +13,12 @@
         {
             _handle = handle;
             _type = type;
-            if(_type.Length > 3)
-                throw new InvalidOperationException($"Type len cannot more 3 symbols.");
         }
 
         protected override void OnCompile()
         {
+            if (_type.Length > 3)
+                throw new InvalidOperationException($"Type len cannot more 3 symbols.");
             var bytes = Encoding.ASCII.GetBytes(_type);
             var (r1, r2) = new d8u(_handle);
             var (r3, u1) = new d8u(bytes[0]);
