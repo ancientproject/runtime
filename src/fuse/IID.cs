@@ -69,10 +69,10 @@
         // .ceq                          - fetch two values from stack and compare that and push result onto stack
         // .ceq &(0x0)                   - fetch two values from stack and compare that and set result into [0x0]
         [OpCode(0xC5)] ceq, // N == C -> result
-        [OpCode(0xC5)] neq, // N != C -> result
-        [OpCode(0xC5)] xor, // N ^ C -> result
-        [OpCode(0xC5)] or,  // N | C -> result
-        [OpCode(0xC5)] and, // N & C -> result
+        [OpCode(0xC6)] neq, // N != C -> result
+        [OpCode(0xC7)] xor, // N ^ C -> result
+        [OpCode(0xC8)] or,  // N | C -> result
+        [OpCode(0xC9)] and, // N & C -> result
 
 
 
