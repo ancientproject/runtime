@@ -19,13 +19,14 @@
 
         [OpCode(0x03)] swap,
 
-        [OpCode(0x08)] ref_t ,
+        [OpCode(0x08)] ref_t,
         [Obsolete] [OpCode(0x08)] jump_t,
         [Obsolete] [OpCode(0x08)] jump_e,
         [Obsolete] [OpCode(0x08)] jump_g,
         [Obsolete] [OpCode(0x08)] jump_u,
         [Obsolete] [OpCode(0x08)] jump_y,
         [OpCode(0x09)] jump_p,
+        [OpCode(0x09)] jump_x,
 
 
         [OpCode(0x33)] page,
