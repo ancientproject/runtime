@@ -1,4 +1,4 @@
-﻿namespace ancient.runtime
+namespace ancient.runtime
 {
     using System;
 
@@ -37,6 +37,8 @@
         [OpCode(0x37)] prune,
         [OpCode(0x38)] locals,
         [OpCode(0x39)] @readonly,
+        [OpCode(0x40)] __static_extern_call,
+
 
 
         [UnfCode] mvj, [UnfCode] raw,
