@@ -22,9 +22,6 @@
         #endregion
 
         #region Properties
-        /// <summary>
-        /// Получает коэфициент, определяющий размер буффера (в пределах 10-100).
-        /// </summary>
         public int BufferCoefficient
         {
             get 
@@ -44,9 +41,6 @@
  
         #region Events
 
-        /// <summary>
-        /// Выполняется при завершении обработки каждой части файла. Позволяет следить за процессом обработки.
-        /// </summary>
         public event EventHandler<(long len, long pos)> Progress;
  
         private void OnProgress((long len, long pos) e)
@@ -57,11 +51,6 @@
         #endregion
  
         #region Constructors
-        /// <summary>
-        /// Создает экемпляр класса FileCrypter.
-        /// </summary>
-        /// <param name="symmetricAlg">Алгоритм для шифрования.</param>
-        /// <param name="hashAlg">Алгоритм для хеширования ключей.</param>
         public AssemblySigner(SymmetricAlgorithm symmetricAlg, HashAlgorithm hashAlg)
         {
             if (symmetricAlg == null || hashAlg == null)
@@ -216,11 +205,6 @@
  
  
         #region Static Methods
-        /// <summary>
-        /// Проверяет зашифрован ли файл.
-        /// </summary>
-        /// <param name="FileName">Задает полный путь к файлу, который надо проверить.</param>
-        /// <returns>Если файл зашифрован, то возвращает true, если нет - false.</returns>
         public static bool IsEncryptedFile(string FileName)
         {
             FileStream fileStream = null;
