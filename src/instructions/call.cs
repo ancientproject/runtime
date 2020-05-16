@@ -13,4 +13,15 @@
             Construct(0xD, 0x5, u1, u2, u3, u4, 0xC);
         }
     }
+    public class __static_extern_call : Instruction
+    {
+        protected internal readonly ushort _sign;
+        public __static_extern_call(ushort sign) : base(IID.__static_extern_call) => _sign = sign;
+
+        protected override void OnCompile()
+        {
+            var (u1, u2, u3, u4) = new d16u(_sign);
+            Construct(0xD, 0x5, u1, u2, u3, u4, 0xC);
+        }
+    }
 }
