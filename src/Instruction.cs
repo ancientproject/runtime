@@ -1,4 +1,4 @@
-#pragma warning disable 618
+﻿#pragma warning disable 618
 
 namespace ancient.runtime
 {
@@ -12,7 +12,7 @@ namespace ancient.runtime
         public IID ID { get; protected set; }
         public ushort OPCode { get; protected set; }
 
-        private byte _r1, _r2, _r3, _u1, _u2, _x1, _x2, _x3;
+        private byte _r1, _r2, _r3, _u1, _u2, _x1, _x2, _x3, _x4, _o1, _o2, _o3;
 
         protected Instruction()
         {
@@ -33,7 +33,7 @@ namespace ancient.runtime
         public virtual ulong Assembly()
         {
             OnCompile();
-            Func<int> Shift = ShiftFactory.Create(36);
+            Func<int> Shift = ShiftFactory.Create(52);
 
             var op1 = ((OPCode & 0xF0UL) >> 4) << Shift();
             var op2 = ((OPCode & 0x0FUL) >> 0) << Shift();
@@ -45,10 +45,15 @@ namespace ancient.runtime
             var rx1 = (ulong)_x1 << Shift();
             var rx2 = (ulong)_x2 << Shift();
             var rx3 = (ulong)_x3 << Shift();
+            var rx4 = (ulong)_x4 << Shift();
+            var ro1 = (ulong)_o1 << Shift();
+            var ro2 = (ulong)_o2 << Shift();
+            var ro3 = (ulong)_o3 << Shift();
             return op1 | op2 | rr1 |
                    rr2 | rr3 |
                    ru1 | ru2 |
-                   rx1 | rx2 | rx3;
+                   rx1 | rx2 | rx3 | rx4 |
+                   ro1 | ro2 | ro3;
         }
 
         public override byte[] GetBodyILBytes() => BitConverter.GetBytes(Assembly()).Reverse().ToArray();
@@ -66,10 +71,24 @@ namespace ancient.runtime
         public override string ToString() => $"{ID} [{string.Join(" ", GetBodyILBytes().Select(x => x.ToString("X2")))}]";
 
         public void Construct(byte r1 = 0, byte r2 = 0, byte r3 = 0, byte u1 = 0, byte u2 = 0, byte x1 = 0,
-            byte x2 = 0, byte x3 = 0) => SetRegisters(r1, r2, r3, u1, u2, x1, x2, x3);
+            byte x2 = 0, byte x3 = 0, byte x4 = 0, byte o1 = 0, 
+            byte o2 = 0, byte o3 = 0) => SetRegisters(r1, r2, r3, u1, u2, x1, x2, x3, x4, o1, o2, o3);
 
         [Obsolete("use Construct")]
-        public void SetRegisters(byte r1 = 0, byte r2 = 0, byte r3 = 0, byte u1 = 0, byte u2 = 0, byte x1 = 0, byte x2 = 0, byte x3 = 0)
+        public void SetRegisters(
+            byte r1 = 0, 
+            byte r2 = 0, 
+            byte r3 = 0, 
+            byte u1 = 0, 
+            byte u2 = 0, 
+            byte x1 = 0, 
+            byte x2 = 0, 
+            byte x3 = 0,
+            byte x4 = 0,
+            byte o1 = 0,
+            byte o2 = 0,
+            byte o3 = 0
+        )
         {
             _r1 = r1;
             _r2 = r2;
@@ -79,6 +98,10 @@ namespace ancient.runtime
             _x1 = x1;
             _x2 = x2;
             _x3 = x3;
+            _x4 = x4;
+            _o1 = o1;
+            _o2 = o2;
+            _o3 = o3;
         }
 
         public static Instruction Summon(IID id, params object[] args)
