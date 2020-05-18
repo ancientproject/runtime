@@ -6,6 +6,7 @@
     using System.Linq;
     using System.Reflection;
     using System.Text.RegularExpressions;
+    using runtime.@unsafe;
 
     public sealed class Module
     {
@@ -28,7 +29,7 @@
         }
 
         public static ushort CompositeIndex(string sign) 
-            => ushort.Parse($"{sign.GetHashCode():X}".Remove(0, 4), NumberStyles.AllowHexSpecifier);
+            => ushort.Parse($"{NativeString.GetHashCode(sign):X}".Remove(0, 4), NumberStyles.AllowHexSpecifier);
 
 
         public static void Boot()
