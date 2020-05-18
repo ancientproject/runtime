@@ -1,4 +1,4 @@
-namespace ancient.runtime
+﻿namespace ancient.runtime
 {
     using System;
 
@@ -47,6 +47,9 @@ namespace ancient.runtime
         [OpCode(0xA1)] pull,
         [OpCode(0xAA)] val,
 
+        [OpCode(0xA5)] sig,
+        [OpCode(0xA6)] ret,
+
         [OpCode(0xB1)] inc,
         [OpCode(0xB2)] dec,
         [OpCode(0xB3)] dup,
@@ -60,11 +63,6 @@ namespace ancient.runtime
 
         [OpCode(0xC2)] dif_t, // if true  then skip N instructions
         [OpCode(0xC3)] dif_f, // if false then skip N instructions
-
-        //[OpCode(0xA4)] inv,
-        //[OpCode(0xA5)] sig, 
-        //[OpCode(0xA6)] ret,
-
 
         // classic equal operation
         // .ceq &(0x0) &(0x1)            - [0x0] == [0x1] and push result onto stack
@@ -117,5 +115,7 @@ namespace ancient.runtime
         [OpCode(0xE6)] max,
         [OpCode(0xE7)] sin,
         [OpCode(0xE8)] sinh,
+
+        [OpCode(0xEF)] reserved1
     }
 }
