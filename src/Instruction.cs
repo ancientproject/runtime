@@ -1,4 +1,4 @@
-﻿#pragma warning disable 618
+#pragma warning disable 618
 
 namespace ancient.runtime
 {
@@ -93,7 +93,6 @@ namespace ancient.runtime
 
             foreach (var @class in classes)
             {
-                var name = @class.Name;
                 static object @default(ParameterInfo t) => t.ParameterType.IsValueType ?
                     Activator.CreateInstance(t.ParameterType) :
                     null;
@@ -106,8 +105,8 @@ namespace ancient.runtime
                         return Activator.CreateInstance(t, args, null) as T;
                     return default;
                 }
-                static object[] PrepareArgs(object[] args, ParameterInfo[] target) 
-                    => target.Select((v, i) => (args.Length > i ? args[i] : null) ?? @default(v)).ToArray();
+                static object[] PrepareArgs(IReadOnlyList<object> args, IEnumerable<ParameterInfo> target) 
+                    => target.Select((v, i) => (args.Count > i ? args[i] : null) ?? @default(v)).ToArray();
 
                 static Instruction ConstructUnsafeObject(Type @class) 
                     => Activate<Instruction>(@class, @class.GetConstructors().First().GetParameters().Select(@default).ToArray());
@@ -116,7 +115,7 @@ namespace ancient.runtime
                     continue;
                 var ctors = @class.GetConstructors();
                 if (!ctors.Any())
-                    throw new Exception($"[{id}] Nearby type '{@class.FullName}' is not valid constructors.");
+                    throw new Exception($"[{id}] Nearest type '{@class.FullName}' has is not valid constructors.");
                 var ctor = ctors.First();
                 
                 var classConstructorParams = ctor.GetParameters();
