@@ -37,6 +37,13 @@
             Global.Add("sys->readChar()", typeof(Console).GetMethod("Read"));
         }
 
+        public IntPtr Handle { get; set; } 
+
+
+        public static Module Find(string name)
+        {
+            return new Module();
+        }
 
 
 
