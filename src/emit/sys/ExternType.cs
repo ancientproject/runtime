@@ -29,7 +29,8 @@
         public static d32i FindAndDeconstruct(string code)
         {
             ValidateTypeCode(code);
-            return new d32i(int.Parse($"{string.Join("", Encoding.ASCII.GetBytes(code).Select(x => $"{x:X}"))}"));
+            return new d32i(int.Parse($"{string.Join("", Encoding.ASCII.GetBytes(code).Select(x => $"{x:X}"))}",
+                NumberStyles.AllowHexSpecifier));
         }
 
         public static ExternType FindAndConstruct(ulong idx)
