@@ -23,6 +23,11 @@
         [SecurityCritical]
         public static void InternString(NativeString str)
         {
+            Console.WriteLine($"InternString :: {str.GetHashCode():X}");
+            if (literalStorage.Any(x => x.GetHashCode() == str.GetHashCode()))
+                return;
+            if (literalStorage.Contains(str))
+                return;
             literalStorage.Add(str);
             GC.KeepAlive(str);
         }
