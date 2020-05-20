@@ -1,27 +1,28 @@
 ﻿namespace ancient.runtime
 {
+    using emit.sys;
     using emit.@unsafe;
+    using @unsafe;
 
     public class call_i : Instruction
     {
-        protected internal readonly ushort _sign;
-        public call_i(ushort sign) : base(IID.call_i) => _sign = sign;
+        protected internal readonly int _sign;
+        public call_i(int sign) : base(IID.call_i) => _sign = sign;
+        public call_i(string sign) : base(IID.call_i) 
+            => _sign = NativeString.GetHashCode(sign.Replace("()", ""));
 
-        protected override void OnCompile()
-        {
-            var (u1, u2, u3, u4) = new d16u(_sign);
-            Construct(0xD, 0x5, u1, u2, u3, u4, 0xC);
-        }
+        protected override void OnCompile() 
+            => Construct(new d32i(_sign));
     }
     public class __static_extern_call : Instruction
     {
         protected internal readonly ushort _sign;
-        public __static_extern_call(ushort sign) : base(IID.__static_extern_call) => _sign = sign;
+        public __static_extern_call(ushort sign) : base(IID.__static_extern_call) 
+            => _sign = sign;
+        public __static_extern_call(string sign) : base(IID.__static_extern_call) 
+            => this._sign = Module.CompositeIndex(sign);
 
-        protected override void OnCompile()
-        {
-            var (u1, u2, u3, u4) = new d16u(_sign);
-            Construct(0xD, 0x5, u1, u2, u3, u4, 0xC);
-        }
+        protected override void OnCompile() 
+            => Construct(new d16u(_sign));
     }
 }
