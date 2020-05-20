@@ -5,6 +5,9 @@
 
     public static class Etc
     {
+        public static IEnumerable<int> ToEnumerable(this Range range)
+            => Enumerable.Range(range.Start.Value, range.End.Value);
+
         public static TSource[] ToArray<TSource>(this IEnumerable<TSource> source, out long Length)
         {
             var array = source.ToArray();
