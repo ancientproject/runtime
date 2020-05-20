@@ -2,10 +2,12 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Globalization;
     using System.Linq;
     using System.Reflection;
     using System.Text.RegularExpressions;
+    using @base;
     using runtime.@unsafe;
 
     public sealed class Module
@@ -16,6 +18,8 @@
             new i8_Type(), new i16_Type(), new i32_Type(), new i64_Type(), new i2_Type()
         };
         public static Context Global { get; } = new Context();
+
+        public static Module Current { get; } = new Module();
 
         public static ExternSignature Composite(string sign, ushort index)
         {
@@ -37,13 +41,28 @@
             Global.Add("sys->readChar()", typeof(Console).GetMethod("Read"));
         }
 
-        public IntPtr Handle { get; set; } 
+        public IntPtr Handle { get; set; }
+        public string Name { get; set; } = "main.module";
+
+        public Dictionary<string, Function> Functions = new Dictionary<string, Function>();
+
+        public void RegisterFunction(Function func) 
+            => Functions.Add(func.Name, func);
+
+        public Function FindFunction(int hash)
+        {
+            var target = StringLiteralMap.GetInternedString(hash);
+            NativeString.Unwrap(target,
+                out var functionName, false, true);
+            return Functions.First(x => x.Key == functionName).Value;
+        }
 
 
         public static Module Find(string name)
         {
             return new Module();
         }
+
 
 
 
