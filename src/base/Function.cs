@@ -23,8 +23,7 @@
         private ulong[] ReadBody()
         {
             var (p, size) = bodyPoint;
-
-            return Enumerable.Range(0, size)
+            return Enumerable.Range(0, (int)size)
                 .Select(x => (ulong)x)
                 .Select(x => memory.read(p + x))
                 .ToArray();
@@ -48,6 +47,8 @@
         }
 
 
+        public VMRef GetCoilRef() => this.bodyPoint;
+
 
         public Function((VMRef metadata, VMRef body) @ref, IMemoryRange memory)
         {
@@ -60,20 +61,23 @@
 
     public readonly struct VMRef
     {
-        public ushort Point { get; }
-        public ushort Size { get; }
+        public ulong Point { get; }
+        public ulong Size { get; }
 
-        public VMRef(ushort point, ushort size)
+        public VMRef(ulong point, ulong size)
         {
             Point = point;
             Size = size;
         }
 
-        public void Deconstruct(out ushort point, out ushort size)
+        public void Deconstruct(out ulong point, out ulong size)
         {
             point = Point;
             size = Size;
         }
+
+        public static implicit operator VMRef((ulong startPoint, ulong size) v)
+            => new VMRef(v.startPoint, v.size);
     }
 
     public struct Utb
@@ -90,6 +94,8 @@
         public bool Is<T>() where T : ExternType 
             => typeof(T) == Type;
 
+        public ExternType ConstructType() => Activator.CreateInstance(Type) as ExternType;
+
         public Utb(ExternType type, ulong value)
         {
             Type = type.GetType();
@@ -101,6 +107,8 @@
         
         public static implicit operator Utb((string, ulong) v) 
             => new Utb(ExternType.Find(v.Item1).GetType(), v.Item2);
+        public static implicit operator Utb((ExternType, ulong) v) 
+            => new Utb(v.Item1.GetType(), v.Item2);
     }
 
 }
