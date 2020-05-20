@@ -17,13 +17,14 @@
 
     public static class MemoryExtensions
     {
-        public static ulong GetFreeAddress(this IMemoryRange range)
+        public static (ulong @ref, ulong start) GetFreeAddress(this IMemoryRange range)
         {
             var address = range.read(0x899);
-            return address == 0x0 ? 0x900 : address + 1;
+            var result = address == 0x0 ? 0x900 : address + 1;
+            return (result, result);
         }
 
-        public static string readString(this IMemoryRange range, ref ushort point)
+        public static string readString(this IMemoryRange range, ref ulong point)
         {
             var size = range.read(point++);
             var chars = new char[size];
@@ -32,7 +33,7 @@
             return string.Join("", chars);
         }
 
-        public static void writeString(this IMemoryRange range, ref ushort point, string value)
+        public static void writeString(this IMemoryRange range, ref ulong point, string value)
         {
             var size = value.Length;
             range.write(point++, size);
