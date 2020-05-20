@@ -6,6 +6,7 @@ namespace ancient.runtime
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
+    using emit.@unsafe;
 
     public abstract class Instruction : OpCode
     {
@@ -69,6 +70,23 @@ namespace ancient.runtime
         public static implicit operator ulong(Instruction i) => i.Assembly();
 
         public override string ToString() => $"{ID} [{string.Join(" ", GetBodyILBytes().Select(x => x.ToString("X2")))}]";
+
+        public void Construct(d32i i)
+        {
+            var (u1, u2, u3, u4, u5, u6, u7, u8) = i;
+            Construct(u1, u2, u3, u4, u5, u6, u7, u8);
+        }
+        public void Construct(d32u i)
+        {
+            var (u1, u2, u3, u4, u5, u6, u7, u8) = i;
+            Construct(u1, u2, u3, u4, u5, u6, u7, u8);
+        }
+        public void Construct(d16u i)
+        {
+            var (u1, u2, u3, u4) = i;
+            Construct(u1, u2, u3, u4);
+        }
+
 
         public void Construct(byte r1 = 0, byte r2 = 0, byte r3 = 0, byte u1 = 0, byte u2 = 0, byte x1 = 0,
             byte x2 = 0, byte x3 = 0, byte x4 = 0, byte o1 = 0, 
