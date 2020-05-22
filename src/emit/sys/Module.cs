@@ -63,6 +63,13 @@
             var files = directory.GetFiles(".dlx", SearchOption.AllDirectories);
             return Import(AncientAssembly.LoadFrom(files.First(x => x.Name.Contains(moduleName)).FullName));
         }
+        
+        public static ulong[] CastFromBytes(byte[] bytes)
+        {
+            if (bytes.Length % sizeof(ulong) == 0)
+                return bytes.Batch(sizeof(ulong)).Select(x => BitConverter.ToUInt64(x.Reverse().ToArray())).Reverse().ToArray();
+            throw new Exception("invalid offset file.");
+        }
 
         public static Module Import(AncientAssembly assembly)
         {
@@ -84,13 +91,15 @@
             var state = Current.Bus.GetState();
             var functions = new List<Function>();
 
-            var enumerator = il.Batch(sizeof(ulong)).Cast<byte[]>().Pipe(Array.Reverse).ToArray().GetEnumerator();
+            var enumerator = CastFromBytes(il).GetEnumerator();
 
-            ulong fetch() => enumerator.MoveNext() ? new d64u(enumerator.Current as byte[]).Value : 0ul;
+            ulong fetch() => enumerator.MoveNext() && enumerator.Current != null ? new d64u((ulong)enumerator.Current).Value : 0ul;
 
             while (enumerator.MoveNext())
             {
-                var current = new d64u(enumerator.Current as byte[]).Value;
+                if(!(enumerator.Current is ulong))
+                    continue;
+                var current = (ulong) enumerator.Current;
                 if(state.AcceptOpCode(current) == 0xA5)
                 {
                     var (_, _, _, _, r1, r2, r3, u1, u2, x1, x2, x3, x4, o1, _, _) 
@@ -168,6 +177,10 @@
             var target = StringLiteralMap.GetInternedString(hash);
             NativeString.Unwrap(target,
                 out var functionName, false, true);
+            return modules.SelectMany(x => x.Value.Functions.Select(z => z.Value))
+                .FirstOrDefault(x => x.Name == functionName);
+
+            // TODO
 
             Debug.Assert(functionName.Count(x => x == '|') <= 1, "'|' in function name too many");
 
