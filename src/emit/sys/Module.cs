@@ -47,7 +47,8 @@
             var paths = new List<FileInfo>
             {
                 new FileInfo($"./{modulePath}.dlx"),
-                new FileInfo($"./obj/{modulePath}.dlx")
+                new FileInfo($"./obj/{modulePath}.dlx"),
+                new FileInfo($"./bin/{modulePath}.dlx"),
             };
             var target = paths.FirstOrDefault(x => x.Exists);
             if (target is null)
