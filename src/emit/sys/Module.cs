@@ -220,8 +220,11 @@
 
         #endregion
 
-        public static void Boot(IBus bus) 
-            => modules.Add(0x0, new Module("main.module") { Bus = bus});
+        public static void Boot(IBus bus)
+        {
+            if(!modules.ContainsKey(0x0))
+                modules.Add(0x0, new Module("main.module") {Bus = bus});
+        }
 
         public override string ToString() 
             => $"Module '{Name}' [{Functions.Count} functions defined]";
