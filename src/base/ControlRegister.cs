@@ -1,9 +1,9 @@
 ﻿namespace ancient.runtime.@base
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using MoreLinq;
-
     public class ControlRegister
     {
         private readonly IState _state;

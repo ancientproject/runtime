@@ -6,7 +6,6 @@
     {
         void Add(IDevice device);
         IDevice find(int address);
-
-        IState GetState();
+        IState GetState() => (this as dynamic).State;
     }
 }
