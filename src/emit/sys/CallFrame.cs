@@ -1,7 +1,6 @@
 ﻿namespace ancient.runtime.emit.sys
 {
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Linq;
     using @base;
     using tools;
