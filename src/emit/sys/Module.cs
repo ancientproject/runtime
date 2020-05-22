@@ -169,7 +169,7 @@
             NativeString.Unwrap(target,
                 out var functionName, false, true);
 
-            Debug.Assert(functionName.Count(x => x == '|') > 1, "'|' in function name too many");
+            Debug.Assert(functionName.Count(x => x == '|') <= 1, "'|' in function name too many");
 
             if (functionName.Contains("|"))
             {
