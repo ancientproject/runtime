@@ -74,7 +74,10 @@
 
         public static Module Import(AncientAssembly assembly)
         {
-            var module = new Module(assembly.Name);
+            var module = modules.FirstOrDefault(x => x.Value.Name == assembly.Name).Value;
+            if (module != null)
+                return module;
+            module = new Module(assembly.Name);
             modules.Add(assembly.GetILCode().GetHashCode(), module);
             Current.Bus.GetState().LoadMeta(assembly.GetMetaILCode());
             ImportFunctions(assembly.GetILCode(), module)
