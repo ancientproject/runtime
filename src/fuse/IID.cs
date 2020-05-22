@@ -38,7 +38,7 @@
         [OpCode(0x38)] locals,
         [OpCode(0x39)] @readonly,
         [OpCode(0x40)] __static_extern_call,
-
+        [OpCode(0x41)] use,
 
 
         [UnfCode] mvj, [UnfCode] raw,
