@@ -1,9 +1,17 @@
 namespace ancient.runtime.@base
 {
     using emit.sys;
+    using tools;
 
     public interface IState
     {
+        void LoadMeta(byte[] meta);
+
+        ulong? next(ulong pc_ref);
+        ulong fetch();
+
+        ushort AcceptOpCode(BitwiseContainer container);
+
         long SP { get; set; }
         ulong pc { get; set; }
 
