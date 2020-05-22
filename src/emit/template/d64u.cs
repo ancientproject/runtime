@@ -1,7 +1,12 @@
 ﻿namespace ancient.runtime.emit.@unsafe
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     public class d64u : UnsafeDeconstruct<ulong>
     {
+        public d64u(IEnumerable<byte> array) : base(BitConverter.ToUInt64(array.ToArray(), 0)) { }
         public d64u(ulong value) : base(value) { }
 
         public void Deconstruct(
