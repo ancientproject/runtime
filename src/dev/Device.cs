@@ -29,7 +29,7 @@
         public void write(ulong address, long data)
             => write((long) address, data);
 
-        public virtual void write(long address, long data) =>
+        public void write(long address, long data) =>
             write(address, (ulong) data);
 
         public void write(ulong address, ulong data)
