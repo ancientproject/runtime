@@ -14,7 +14,7 @@
 
         public TValue Value => _value;
 
-        protected internal void resetShifter() => shifter = ShiftFactory.Create(size);
+        protected internal void resetShifter() => shifter = ShiftFactory.CreateByIndex(size);
 
         protected UnsafeDeconstruct(TValue value)
         {

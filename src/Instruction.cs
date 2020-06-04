@@ -34,7 +34,7 @@ namespace ancient.runtime
         public virtual ulong Assembly()
         {
             OnCompile();
-            Func<int> Shift = ShiftFactory.Create(52);
+            Func<int> Shift = ShiftFactory.CreateByIndex(52);
 
             var op1 = ((OPCode & 0xF0UL) >> 4) << Shift();
             var op2 = ((OPCode & 0x0FUL) >> 0) << Shift();

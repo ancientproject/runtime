@@ -9,7 +9,7 @@
 
         private ShiftFactory() {}
 
-        public static ShiftFactory Create(int bitIndex) => new ShiftFactory {index = bitIndex};
+        public static ShiftFactory CreateByIndex(int bitIndex) => new ShiftFactory {index = bitIndex};
 
         public int Shift()
         {
