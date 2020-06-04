@@ -1,6 +1,7 @@
 ﻿namespace ancient.runtime.devices
 {
     using MagicOnion;
+    using MessagePack;
 
     public interface IDeviceLayer : IService<IDeviceLayer>
     {
@@ -9,7 +10,7 @@
         UnaryResult<None> write(ulong address, ulong data);
         UnaryResult<ulong> read(ulong address);
     }
-
+    [MessagePackObject]
     public struct None
     {
 
